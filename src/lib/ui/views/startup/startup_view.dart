@@ -13,30 +13,40 @@ class StartupView extends StackedView<StartupViewModel> {
     StartupViewModel viewModel,
     Widget? child,
   ) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'MyApp',
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Loading ...', style: TextStyle(fontSize: 16)),
-                Gap(10),
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                    strokeWidth: 6,
-                  ),
+            if (viewModel.errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  viewModel.errorMessage!,
+                  style: const TextStyle(color: Colors.red, fontSize: 16),
+                  textAlign: TextAlign.center,
                 ),
-              ],
-            ),
+              ),
+            if (viewModel.isBusy)
+              const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Loading ...', style: TextStyle(fontSize: 16)),
+                  Gap(10),
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                      strokeWidth: 6,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),

@@ -31,6 +31,15 @@ class HomeView extends StackedView<HomeViewModel> {
                       ),
                     ),
                     const Gap(25),
+                    if (viewModel.errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          viewModel.errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     MaterialButton(
                       color: Colors.black,
                       onPressed: viewModel.incrementCounter,
@@ -79,4 +88,7 @@ class HomeView extends StackedView<HomeViewModel> {
     BuildContext context,
   ) =>
       HomeViewModel();
+
+  @override
+  void onViewModelReady(HomeViewModel viewModel) => viewModel.init();
 }
