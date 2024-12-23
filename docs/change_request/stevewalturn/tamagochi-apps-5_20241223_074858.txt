@@ -1,0 +1,1 @@
+Add shared preferences to save user data, so use shell

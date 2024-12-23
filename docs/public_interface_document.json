@@ -1,6 +1,6 @@
 {
   "package_name": "com.walturn.my_app",
-  "project_description": "The Flutter application follows the Stacked architecture, featuring routing, dependency injection, and dialog/bottom sheet management. It includes a startup screen, a home screen with a counter, a dialog, and a bottom sheet. The application also integrates with Firebase for analytics tracking and supports localization and multiple flavors (development and production).",
+  "project_description": "The Flutter application is a simple counter app that follows the Stacked architecture. It includes a startup screen, a home screen with a counter, a dialog, and a bottom sheet. The application integrates with Firebase for analytics tracking and supports localization and multiple flavors (development and production).",
   "architecture_overview": "The application is structured using the Stacked architecture, which separates the concerns of the UI, view models, and services. It uses Stacked for state management, routing, and dependency injection. The main components include the App, AppView, and various feature-specific views and view models. The application also utilizes services for managing dialogs, bottom sheets, and navigation, as well as observing screen transitions for analytics purposes.",
   "files": [
     {
@@ -839,6 +839,77 @@
         "package:my_app/ui/views/app/app_viewmodel.dart",
         "package:stacked/stacked.dart",
         "package:stacked_services/stacked_services.dart"
+      ]
+    },
+    {
+      "name": "lib/models/user_data.dart",
+      "description": "The `UserData` class in this file is responsible for managing and representing the user's data within the application. It serves as a model for storing and manipulating user-specific information, focusing on the user's counter value.",
+      "class_diagram": "@startuml\nclass UserData {\n  -int counter\n  +toJson(): Map<String, dynamic>\n  +fromJson(Map<String, dynamic> json): UserData\n  +copyWith({int? counter}): UserData\n  +get props: List<Object?>\n}\n@enduml",
+      "methods": [
+        {
+          "name": "toJson",
+          "description": "Converts the `UserData` instance to a JSON-friendly Map, allowing it to be easily serialized and stored.",
+          "parameters": null,
+          "return_type": "Map<String, dynamic>"
+        },
+        {
+          "name": "fromJson",
+          "description": "Constructs a `UserData` instance from a JSON-formatted Map, enabling the model to be deserialized from a data source.",
+          "parameters": [
+            "Map<String, dynamic> json"
+          ],
+          "return_type": "UserData"
+        },
+        {
+          "name": "copyWith",
+          "description": "Creates a new `UserData` instance by copying the current instance and optionally updating the counter value. This allows for efficient state updates without modifying the original instance.",
+          "parameters": [
+            "int? counter"
+          ],
+          "return_type": "UserData"
+        },
+        {
+          "name": "get props",
+          "description": "Returns a list of the properties that define the equality of two `UserData` instances. This is used by the `Equatable` mixin to provide efficient comparison and hashing of `UserData` objects.",
+          "parameters": null,
+          "return_type": "List<Object?>"
+        }
+      ],
+      "dependencies": [
+        "package:equatable/equatable.dart"
+      ]
+    },
+    {
+      "name": "lib/services/shared_preferences_service.dart",
+      "description": "The SharedPreferencesService is responsible for managing the storage and retrieval of user data using the shared_preferences plugin. It provides a simple API for saving and loading user data, ensuring that the application can persist and retrieve user-specific information across sessions.",
+      "class_diagram": "@startuml\nclass SharedPreferencesService implements InitializableDependency {\n  - String _userDataKey\n  - SharedPreferences? _prefs\n\n  + Future<void> saveUserData(UserData userData)\n  + Future<UserData> getUserData()\n  + Future<void> init()\n}\n@enduml",
+      "methods": [
+        {
+          "name": "saveUserData",
+          "description": "Saves the provided UserData object to the SharedPreferences store.",
+          "parameters": [
+            "UserData userData"
+          ],
+          "return_type": "Future<void>"
+        },
+        {
+          "name": "getUserData",
+          "description": "Retrieves the UserData object from the SharedPreferences store.",
+          "parameters": null,
+          "return_type": "Future<UserData>"
+        },
+        {
+          "name": "init",
+          "description": "Initializes the SharedPreferences instance and prepares the service for use.",
+          "parameters": null,
+          "return_type": "Future<void>"
+        }
+      ],
+      "dependencies": [
+        "dart:convert",
+        "package:shared_preferences.dart",
+        "package:my_app/models/user_data.dart",
+        "package:stacked/stacked_annotations.dart"
       ]
     }
   ],
