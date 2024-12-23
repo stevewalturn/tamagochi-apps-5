@@ -1,14 +1,26 @@
 import 'package:stacked/stacked_annotations.dart';
+import 'package:my_app/models/user.dart';
 
-/// {@template analytics_service}
-/// A wrapper for Analytics which encapsulates the implementation of
-/// []
-///
-/// {@endtemplate}
-class AnalyticService extends InitializableDependency {
-  /// {@macro analytics_service}
-  AnalyticService();
+class AnalyticService implements InitializableDependency {
+  User? _currentUser;
+
+  User? get currentUser => _currentUser;
+
+  void setUser(User user) {
+    _currentUser = user;
+  }
+
+  void clearUser() {
+    _currentUser = null;
+  }
 
   @override
-  Future<void> init() async {}
+  Future<void> init() async {
+    // Initialize analytics service
+    try {
+      // Add any additional analytics initialization here
+    } catch (e) {
+      throw Exception('Failed to initialize AnalyticService: ${e.toString()}');
+    }
+  }
 }
