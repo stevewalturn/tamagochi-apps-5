@@ -1,6 +1,6 @@
 {
   "package_name": "com.walturn.my_app",
-  "project_description": "The Flutter application follows the Stacked architecture, featuring routing, dependency injection, and dialog/bottom sheet management. It includes a startup screen, a home screen with a counter, a dialog, and a bottom sheet. The application also integrates with Firebase for analytics tracking and supports localization and multiple flavors (development and production).",
+  "project_description": "The Flutter application is a simple counter app that demonstrates the use of the Stacked architecture. It includes a startup screen, a home screen with a counter, and the ability to display a custom dialog and bottom sheet. The application also integrates with Firebase for analytics tracking and supports localization and multiple app flavors (development and production).",
   "architecture_overview": "The application is structured using the Stacked architecture, which separates the concerns of the UI, view models, and services. It uses Stacked for state management, routing, and dependency injection. The main components include the App, AppView, and various feature-specific views and view models. The application also utilizes services for managing dialogs, bottom sheets, and navigation, as well as observing screen transitions for analytics purposes.",
   "files": [
     {
@@ -839,6 +839,96 @@
         "package:my_app/ui/views/app/app_viewmodel.dart",
         "package:stacked/stacked.dart",
         "package:stacked_services/stacked_services.dart"
+      ]
+    },
+    {
+      "name": "lib/models/user.dart",
+      "description": "This file defines the `User` model, which represents a user in the application. The `User` class encapsulates the key attributes of a user, such as their ID, name, and a counter that can be used to track some user-specific state or activity.",
+      "class_diagram": "@startuml\nclass User {\n  +String id\n  +String name \n  +int counter\n  +User(id, name, [counter = 0])\n  +User.fromJson(Map<String, dynamic>)\n  +Map<String, dynamic> toJson()\n  +User copyWith({id, name, counter})\n  +List<Object?> get props\n}\n@enduml",
+      "methods": [
+        {
+          "name": "User",
+          "description": "The constructor for the `User` class. It takes in the required `id` and `name` parameters, and an optional `counter` parameter that defaults to 0.",
+          "parameters": [
+            "id",
+            "name",
+            "counter"
+          ],
+          "return_type": "User"
+        },
+        {
+          "name": "fromJson",
+          "description": "A factory constructor that creates a `User` instance from a JSON map. This is used for deserializing user data from a JSON source.",
+          "parameters": [
+            "Map<String, dynamic>"
+          ],
+          "return_type": "User"
+        },
+        {
+          "name": "toJson",
+          "description": "A method that converts the `User` instance to a JSON map. This is used for serializing user data to a JSON format.",
+          "parameters": null,
+          "return_type": "Map<String, dynamic>"
+        },
+        {
+          "name": "copyWith",
+          "description": "A method that creates a new `User` instance with the specified changes to the `id`, `name`, or `counter` properties. This is useful for creating modified copies of a `User` instance.",
+          "parameters": [
+            "id",
+            "name",
+            "counter"
+          ],
+          "return_type": "User"
+        },
+        {
+          "name": "props",
+          "description": "A getter that returns a list of the `User` instance's properties. This is used by the `Equatable` mixin to facilitate value-based comparison of `User` instances.",
+          "parameters": null,
+          "return_type": "List<Object?>"
+        }
+      ],
+      "dependencies": [
+        "equatable",
+        "json_annotation"
+      ]
+    },
+    {
+      "name": "lib/services/user_preferences_service.dart",
+      "description": "The UserPreferencesService is responsible for managing the user's preferences and profile data within the application. It provides methods to save, retrieve, and clear the user's data, which is stored in the device's SharedPreferences. This service is essential for ensuring the user's settings and personal information are persisted across app sessions and available when needed.",
+      "class_diagram": "@startuml\nclass UserPreferencesService implements InitializableDependency {\n  - static String _userKey\n  - SharedPreferences? _preferences\n\n  + Future<void> saveUser(User user)\n  + Future<User?> getUser()\n  + Future<void> clearUser()\n  + Future<void> init()\n}\n@enduml",
+      "methods": [
+        {
+          "name": "saveUser",
+          "description": "Saves the provided User object to the device's SharedPreferences. This allows the user's profile data to persist across app sessions.",
+          "parameters": [
+            "User user"
+          ],
+          "return_type": "Future<void>"
+        },
+        {
+          "name": "getUser",
+          "description": "Retrieves the user's profile data from the SharedPreferences, returning a User object if found, or null if not.",
+          "parameters": [],
+          "return_type": "Future<User?>"
+        },
+        {
+          "name": "clearUser",
+          "description": "Removes the user's profile data from the SharedPreferences, effectively logging the user out of the application.",
+          "parameters": [],
+          "return_type": "Future<void>"
+        },
+        {
+          "name": "init",
+          "description": "Initializes the SharedPreferences instance, which is required for the other methods to function properly.",
+          "parameters": [],
+          "return_type": "Future<void>"
+        }
+      ],
+      "dependencies": [
+        "dart:convert",
+        "package:shared_preferences.dart",
+        "package:stacked/stacked_annotations.dart",
+        "package:my_app/models/user.dart"
       ]
     }
   ],
