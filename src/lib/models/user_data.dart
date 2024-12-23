@@ -3,24 +3,27 @@ import 'package:equatable/equatable.dart';
 class UserData extends Equatable {
   final int counter;
 
-  const UserData({
-    this.counter = 0,
-  });
+  const UserData({this.counter = 0});
 
-  Map<String, dynamic> toJson() => {
-        'counter': counter,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'counter': counter,
+    };
+  }
 
-  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
-        counter: json['counter'] as int? ?? 0,
-      );
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      counter: json['counter'] as int? ?? 0,
+    );
+  }
 
   UserData copyWith({
     int? counter,
-  }) =>
-      UserData(
-        counter: counter ?? this.counter,
-      );
+  }) {
+    return UserData(
+      counter: counter ?? this.counter,
+    );
+  }
 
   @override
   List<Object?> get props => [counter];

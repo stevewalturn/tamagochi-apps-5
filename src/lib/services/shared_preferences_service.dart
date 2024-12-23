@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_app/models/user_data.dart';
 import 'package:stacked/stacked_annotations.dart';
 
